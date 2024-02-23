@@ -60,20 +60,13 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageSubtext } 
     <main>
       <article>
         <div class="hero-image">
+          {heroImage && <Image width={500} height={510} src={heroImage} alt="" />}
           {
-            heroImage && (
-              <Image
-                width={500}
-                height={510}
-                src={heroImage}
-                alt=""
-              />
+            heroImage && heroImageSubtext && (
+              <p class="italic mt-3 text-sm text-center max-w-screen-md mx-auto align-middle">
+                {heroImageSubtext}
+              </p>
             )
-					}
-					{
-						heroImage && heroImageSubtext && (
-							<p class="italic mt-3 text-sm text-center max-w-screen-md mx-auto align-middle">{heroImageSubtext}</p>
-						)
           }
         </div>
         <div class="prose">

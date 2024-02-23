@@ -6,6 +6,8 @@ heroImage: "/first-post.webp"
 heroImageSubtext: "DALL-E Prompt: generate some abstract shapes that represent programming languages.  Do one for Rust, Kotlin, and Elixir"
 ---
 
+TODO copy code button component, inline code, finish this post, finish index.astro
+
 ## Who am I?
 
 ## What is this page for?
@@ -27,9 +29,15 @@ can embed various frameworks, can write experiemnt code or code to make a point.
 Here's a timer I--like--just threw together right now (I am NOT a front end dev,
 so I did consult the docs and chatGPT).
 
+import CodeBlock from "../../components/CodeBlock.astro";
+
+<CodeBlock filename="src/components/demos/solid/timer.tsx" lang="tsx" />
+
 import { Timer } from "../../components/demos/solid/timer";
 
-<Timer client:load />
+<div class="pb-2">
+  <Timer client:load />
+</div>
 
 ### MDX
 

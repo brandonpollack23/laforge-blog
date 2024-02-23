@@ -1,0 +1,14 @@
+---
+import { CollectionEntry } from "astro:content";
+import { promises as fs } from "node:fs";
+import { Prism } from "@astrojs/prism";
+
+type Props = CollectionEntry<"file">["data"];
+
+const { filename, lang } = Astro.props;
+
+/// WARNING filename must be relative to project root!
+let fileContents = (await fs.readFile(filename)).toString();
+---
+
+<Prism lang={lang} code={fileContents} />
