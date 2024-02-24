@@ -152,12 +152,13 @@ hr {
 
 /* MDX stuff */
 /* TOC */
-.toc {
+nav.toc {
 	background-color: #eaecf0;
 	border: 1px solid #a2a9b1;
 	width: fit-content;
 	padding-right: 10px;
 	padding-bottom: 5px;
+	border-bottom: 1px solid #CCC;
 }
 
 .toc ol {
