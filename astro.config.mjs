@@ -7,6 +7,7 @@ import solidJs from "@astrojs/solid-js";
 import rehypeToc from "rehype-toc";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { remarkReadingTime } from "./remark-reading-time.mjs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,6 +17,7 @@ export default defineConfig({
       gfm: true,
       syntaxHighlight: "prism",
       rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeToc],
+      remarkPlugins: [remarkReadingTime],
     }),
     sitemap(),
     tailwind(),

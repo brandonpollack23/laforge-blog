@@ -8,7 +8,8 @@ import { Image } from "astro:assets";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, updatedDate, heroImage, heroImageSubtext } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroImageSubtext, minutesRead } =
+  Astro.props;
 ---
 
 <html lang="en">
@@ -73,6 +74,7 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageSubtext } 
           <div class="title">
             <div class="date">
               <FormattedDate date={pubDate} />
+              {minutesRead && <span> - {minutesRead} minute read</span>}
               {
                 updatedDate && (
                   <div class="last-updated-on">
