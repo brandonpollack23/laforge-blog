@@ -1,6 +1,6 @@
 # TODO
 
-* Deploy
+* Fix max size of picture in /blog page.
 
 ## General functionality
 
