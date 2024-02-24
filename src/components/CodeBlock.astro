@@ -1,9 +1,6 @@
 ---
-import { CollectionEntry } from "astro:content";
 import { promises as fs } from "node:fs";
 import { Prism } from "@astrojs/prism";
-
-type Props = CollectionEntry<"file">["data"];
 
 const { filename, lang } = Astro.props;
 
