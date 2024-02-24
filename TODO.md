@@ -4,6 +4,7 @@
 
 ## General functionality
 
+* Add time to read
 * Disqus
 * Copy code button in top right of CodeBlocks (wrapper around prism in general)
 * Multi language
