@@ -1,8 +1,5 @@
 # TODO
 
-* BlogPost.astro migrate all to tailwind
-* index migrate all to tailwind
-
 ## General functionality
 
 * Disqus
