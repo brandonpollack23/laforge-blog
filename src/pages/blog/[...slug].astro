@@ -12,9 +12,26 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
+const slug = post.slug;
 const { Content, remarkPluginFrontmatter } = await post.render();
 ---
 
 <BlogPost minutesRead={remarkPluginFrontmatter.minutesRead} {...post.data}>
   <Content />
+  <hr />
+  <div id="comment-section"><p class="mt-2 text-sm italic">Comments section loading...</p></div>
 </BlogPost>
+
+<!-- Cactus comments (hosted on matrix.org matrix server, could be moved to self hosted if I wanted) -->
+<script is:inline type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
+<link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css" />
+<script is:inline data-slug={slug}>
+  let slug = document.currentScript.dataset.slug;
+  initComments({
+    node: document.getElementById("comment-section"),
+    defaultHomeserverUrl: "https://matrix.cactus.chat:8448",
+    serverName: "cactus.chat",
+    siteName: "laforge.brpollack.xyz",
+    commentSectionId: slug,
+  });
+</script>
