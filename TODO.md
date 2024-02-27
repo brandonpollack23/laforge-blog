@@ -3,11 +3,13 @@
 ## General functionality
 
 * Copy code button in top right of CodeBlocks (wrapper around prism in general) <https://prismjs.com/plugins/copy-to-clipboard/>
+* Search <https://blog.otterlord.dev/posts/astro-search/>
+* Tag filter search on blogs page
 * Multi language
 
 ## Posts
 
-* Post on why you should use chatGPT if you dont, dont get left behind.  Make a small calculator in solidJS using it and document process.
 * Post on matchmaker-rs
 * Post on UTC and use it plz, reference remote.com
+* Post on matchmaker-ex
 * Kanji draw that draws all lines at once
