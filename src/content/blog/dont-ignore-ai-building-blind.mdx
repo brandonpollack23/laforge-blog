@@ -18,7 +18,7 @@ elixir) soon, but first I wanted to talk a bit about this pair coding with AI.
 
 I have a few close friends who are very skeptical of AI and its potential, they
 generally give me a shrug and say things like "It just seems like a gimmick" or
-"I just don't see how it can really help me day to day in my work".
+"I just don't see how it can help me day to day in my work".
 
 I can see where they are coming from (and about a year ago, I was with them!),
 but I've been playing more and more with this stuff, have close friends in the
@@ -44,14 +44,14 @@ built with Astro, and so I can embed components from any framework.
 
 ## Final note on using ChatGPT
 
-I don't believe chatGPT or bard or any other AI is a replacement for an engineer.
+I don't believe chatGPT or Bard or any other AI is a replacement for an engineer.
 
 The point I'm trying to make here is simply this:
 
 I know SolidJS _somewhat_. I've used other frameworks similar, I've used it once
 before, I've read through docs, I've thought about problems in the shower...but
-I've never really built anything with it bigger than a couple of components. In
-order to use it, I'd have to heavily reference examples and documentation.
+I've never really built anything with it bigger than a couple of components. To
+use it, I'd have to heavily reference examples and documentation.
 
 ChatGPT saves me this hassle. It's not a replacement for an engineer, but it
 compresses all the information I need and saves me time and effort searching,
@@ -67,14 +67,14 @@ the docs. Now my friends (one in particular this article is targeted towards)
 will be the first to tell you and make fun of me for **_Loving_** documentation
 (all you have to do is read the manual!), but I've come to their way of thinking
 somewhat. IFF you can execute and get the job done quickly without reading the
-manual, shoudln't you sometimes?
+manual, shouldn't you sometimes?
 
 ## GPT Alone
 
 Now, chatGPT is good enough to do this entire component all by itself I reckon,
 and you can do this, cross reference the docs, and be done.
 
-But that's not my intent here. My intent is to show how one might use this tool
+But that's not my intent here. I intend to show how one might use this tool
 on something larger and more complex. So I'm going to use chatGPT to help me
 get the scaffolding in place, and then build on that bit by bit. But in case
 you wanna know what chat GPT comes up with:
@@ -90,7 +90,7 @@ import CodeBlockSubtitled from "/src/components/CodeBlockSubtitled.astro";
   </p>
 </CodeBlockSubtitled>
 
-This is nearly right, there is just a missing conversion, some padding, and the
+This is nearly right, there is just a missing conversion, some missing padding, and the
 input is text (I wanted to build one with buttons). But I didn't specify that.
 
 ```tsx
@@ -110,7 +110,7 @@ import CalculatorGpt1 from "/src/components/demos/solid/building_a_calculator/ca
 
 Well wasn't that simple!
 
-## Ok but for real
+## OK, but--like--for real
 
 Ok yeah sure. Real stuff is harder and more complex. So let's treat this problem like a series of harder problems.
 
@@ -126,7 +126,7 @@ Let's go!
 
 # Starting with a button
 
-I'm using tailwind and that is set up for me. Imagine you're working at a
+I'm using TailwindCSS and that is set up for me. Imagine you're working at a
 company and some other smart engineer already did all that. You're simply told
 "make this thing in this way we make things ok go kthxbie".
 
@@ -140,7 +140,7 @@ Alright...better start with just a button. I'm going to use chatGPT to help me.
     ChatGPT prompt: I'm building a calculator in solidJS. I already have tailwindCSS setup and want
     to use that. Let's go slowly one step at a time. First I don't want text input I want to use
     button input. Can you help me make the buttons? I want them to have a flat style with rounded
-    cornerned rectangles. Lets start with just the button part.
+    cornerned rectangles. Let's start with just the button part.
     <br />
     Link: <a href="https://chat.openai.com/share/b840c5ae-dc96-4bca-840b-0aca19385284">ChatGPT</a>
   </p>
@@ -169,7 +169,8 @@ import { WowButton } from "/src/components/demos/solid/building_a_calculator/cal
   <WowButton client:only="solid-js" />
 </div>
 
-Not only did it make a nice button it did a ton of nice things I need but forgot to ask for:
+Not only did it make a nice button, but it also did a ton of nice things I
+needed but forgot to ask for:
 
 - It made the button have a hover effect
 - It added event handling
@@ -178,28 +179,28 @@ Not only did it make a nice button it did a ton of nice things I need but forgot
 
 It did make a "mistake" in that this is not valid strict typescript since the props have no type.
 
-It also oddly (to me but perhaps I don't know some idiom) seperated the callback
+It also oddly (to me but perhaps I don't know some idiom) separated the callback
 from the data by also passing a "value" prop. I suppose this is nice if you want
-to change payload but not reload different callbacks etc in the application.
+to change the payload but not reload different callbacks etc in the application.
 
 ## Fixing the errors.
 
-ChatGPT forgot to be type safe, probably because most folks don't. I'll just fix
-that up really quick by defining the interface (I could have asked ChatGPT to do
+ChatGPT forgot to be type-safe, probably because most folks don't. I'll just fix
+that up really quickly by defining the interface (I could have asked ChatGPT to do
 this for me if I don't know typescript so well, but that's ok)
 
 import CodeBlock from "/src/components/CodeBlock.astro";
 
 <CodeBlock filename="src/components/demos/solid/building_a_calculator/calculator1.tsx" lang="tsx" />
 
-_Juicy_. Nice and safe. Thanks types!
+_Juicy_. Nice and safe. Thanks, types!
 
 ## Constructing the grid
 
 Well, chatGPT already did that, so let's show what that looks like now.
 
 I've also added a bit of cleanup for typing as before and some renaming to make
-it fit with what we have so far.
+it fits with what we have so far.
 
 If you open the chat, you'll see at first it uses some stringly typing...ick.
 
@@ -218,7 +219,7 @@ import Grid from "/src/components/demos/solid/building_a_calculator/calculator1.
 >
   <p>
     "Followup prompt: can you generate buttons for 0-9, decimal point, addition, subtraction,
-    division, multiplaction, positive negative, and equals?"
+    division, multiplaction, positive negative, and equals?" (notice the spelling mistakes)
   </p>
   <p>"Great! Instead of stringly typed "value" prop can we use an enum or something type safe?"</p>
   <p>"can you save me some keystrokes and define the entire grid for me?"</p>
@@ -237,7 +238,7 @@ import CalculatorGrid from "/src/components/demos/solid/building_a_calculator/ca
 
 Are you impressed yet?
 
-It even put the things in the right order so the higher numbers are at the top,
+It even puts the things in the right order so the higher numbers are at the top,
 operators on the right, things aren't just strewn about!
 
 ## Summary so far
@@ -252,9 +253,9 @@ So now what we need is an output box and to wire up the buttons to do things.
 ## Wiring up the buttons
 
 Ok so as before, I've added some types and rearranged things a bit. I am the
-engineer after all, GPT just helps me out.
+engineer, after all. GPT just helps me out.
 
-I forget how to use `useState` in SolidJS, I'm glad it generated that for me. I
+I forgot how to use `useState` in SolidJS, I'm glad it generated that for me. I
 checked the Solid docs to make sure this all checks out. _Evvverrrythinnngg looks Gucci..._
 
 <CodeBlockSubtitled
@@ -264,7 +265,7 @@ checked the Solid docs to make sure this all checks out. _Evvverrrythinnngg look
   <p>
     "Now can we wire up the buttons to create numbers and state so that when I click them I can make
     a number, then I can click operations and make another number, and then I can click teh equals
-    button and the final result is displayed?"
+    button and the final result is displayed?" (more spelling mistakes that GPT takes like a champ)
   </p>
 </CodeBlockSubtitled>
 
@@ -272,14 +273,14 @@ checked the Solid docs to make sure this all checks out. _Evvverrrythinnngg look
 
 This ain't how I'd structure this. I'd decouple my state. Hard. But this is just a demo, I'm making a point here.
 
-I'd probably have a stateless module that does the calculations, hide that
+I'd probably have a stateless module that does the calculations, hides that
 behind some opaque whatever if I needed to, then pass that (via props or [other
 mechanisms](https://docs.solidjs.com/concepts/context) to my widget here.) Heck,
 I could ask chatGPT to help with that too, but this has already taken me too
 long to write and you wanna go on with your day (or [whatever it is you might be
 doing](https://knowyourmeme.com/memes/boss-makes-a-dollar-i-make-a-dime)).
 
-I don't love this structure either. But it's a start. I can refactor later.
+I don't love this structure either. But it's a start. I can refactor it later.
 
 Chill out. Back to the code.
 
@@ -289,7 +290,7 @@ import CalculatorWired from "/src/components/demos/solid/building_a_calculator/c
   <CalculatorWired client:only="solid-js" />
 </div>
 
-Hey this is nice! There are some problems though:
+Hey, this is nice! There are some problems though:
 
 - It jumps around because there is no minimum height set on the output box
 - There is no clear button.
@@ -301,10 +302,10 @@ But it is functional. I can work from here on my own quite easily and consult
 the AI when I get stuck.
 
 Here is one more with some fixes added. To keep the article itself short, I left
-it out but you can see it in the blog's github under `calculator_wired2.tsx`.
+it out but you can see it in the blog's GitHub under `calculator_wired2.tsx`.
 
 I also added one more query with chatGPT to find out how to write a TS function
-that gets teh square root with newton's method. See the
+that gets the square root with Newton's method. See the
 [chat](https://chat.openai.com/share/b840c5ae-dc96-4bca-840b-0aca19385284) for
 details.
 
@@ -333,7 +334,7 @@ So hopefully this has begun to convince you, that this tool is useful. This
 example is contrived but the long short is, GPT is great as a shortcut to the
 docs.
 
-I know I know. "But Brandon this is just a calculator toy". Yeah it is, but I've
+I know I know. "But Brandon this is just a calculator toy". Yeah. It is, but I've
 used it for more complex things! But don't just take my word for it, try it
 yourself! Try GPT4 or Gemini Ultra Pro Ultimate Edition with extras formerly known as Bard (or whatever
 they're calling it now...). Code with it, try asking it questions instead of
@@ -342,9 +343,9 @@ digging deep in docs. See what it says.
 If you require more evidence, my most recent project that is the subject of an
 upcoming post,
 [matchmaker-rs](https://github.com/brandonpollack23/matchmaker-rs), a toy game
-match maker (that does nothing) utilized this technique a lot. I had never
+match-maker (that does nothing) utilized this technique a lot. I had never
 really integrated `tokio_tracing`, all those different subscribers for it, made
-my own protocol with serde (usually just use something that exists), or tons of
+my own protocol with Serde (usually just use something that exists), or tons of
 other things. But I used chatGPT to help me get started and it was a huge boon
 to me, and I have ~10 years of experience. I like to think I'm not half bad sometimes.
 
