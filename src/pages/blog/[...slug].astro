@@ -18,7 +18,7 @@ const { Content, remarkPluginFrontmatter } = await post.render();
 
 <BlogPost minutesRead={remarkPluginFrontmatter.minutesRead} {...post.data}>
   <Content />
-  <hr />
+  <hr class="my-2 h-1 bg-gray-300 rounded-sm" />
   <div id="comment-section"><p class="mt-2 text-sm italic">Comments section loading...</p></div>
 </BlogPost>
 

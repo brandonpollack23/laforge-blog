@@ -20,7 +20,17 @@ const file = defineCollection({
   schema: z.object({
     filename: z.string(),
     lang: z.string(),
+    class: z.string().optional(),
   }),
 });
 
-export const collections = { blog, file };
+const fileSubtitled = defineCollection({
+  type: "content",
+  schema: z.object({
+    filename: z.string(),
+    lang: z.string(),
+    class: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, file, fileSubtitled };

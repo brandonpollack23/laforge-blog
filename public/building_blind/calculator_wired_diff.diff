@@ -1,0 +1,38 @@
+8a9,16
+>   const [resultDisplayed, setResultDisplayed] = createSignal(false);
+> 
+>   const calculatorReset = () => {
+>     setCurrentInput("");
+>     setPreviousInput("");
+>     setOperation(null);
+>     setResultDisplayed(false);
+>   };
+10a19,23
+>     if (resultDisplayed() === true) {
+>       setResultDisplayed(false);
+>       setCurrentInput("");
+>     }
+> 
+15a29,33
+>       if (op === CalculatorButtonType.ToggleSign) {
+>         setCurrentInput((prev) => String(-parseFloat(prev)));
+>         return;
+>       }
+> 
+45a64
+>     setResultDisplayed(true);
+72a92,94
+>       case CalculatorButtonType.Clear:
+>         calculatorReset();
+>         break;
+81c103
+<       <div class="text-lg">{currentInput()}</div>
+---
+>       <div class="text-lg min-h-12">{currentInput()}</div>
+124a147,152
+>           onClick={onButtonClick}
+>           class="col-span-2"
+>         />
+>         <CalculatorButton
+>           label="Clear"
+>           value={CalculatorButtonType.Clear}

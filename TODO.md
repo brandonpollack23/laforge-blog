@@ -2,7 +2,7 @@
 
 ## General functionality
 
-* Copy code button in top right of CodeBlocks (wrapper around prism in general)
+* Copy code button in top right of CodeBlocks (wrapper around prism in general) <https://prismjs.com/plugins/copy-to-clipboard/>
 * Multi language
 
 ## Posts

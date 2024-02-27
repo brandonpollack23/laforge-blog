@@ -1,0 +1,327 @@
+---
+title: "Building blind: Even with skeptisim, do not ignore the benefits of LLM AI."
+description: "In this post we will discuss the benefits of LLM AI and how it can be used to help developers build software even when working in a new context or without knowledge of the environment."
+pubDate: "Feb 26 2024"
+heroImage: "/building_blind/building-blind.webp"
+heroImageSubtext: "DALL-E Prompt: I have a personal development blog called 'Laforge'.  I am writing my first technical post about the benefits of AI and why even a seasoned developer shouldn't ignore it.  In this post I am going to be using chatGPT 4.0 to help me build a calculator widget in a framework I''m interested in but don''t know too much about called SolidJS with typescript.  Generate an image that represents this blog post."
+---
+
+# Building Blind
+
+Recently I've been using chat GPT (among other AI tools) quite a bit in order to
+get the ball rolling on a [few personal
+projects](https://github.com/brandonpollack23/matchmaker-rs). I will post more
+about matchmaker-rs (and the later implementation to be made, matchmaker-ex in
+elixir) soon, but first I wanted to talk a bit about this pair coding with AI.
+
+## Motivation
+
+I have a few close friends that are very skeptical of AI and its potential, they
+generally give me a shrug and say things like "It just seems like a gimmick" or
+"I just don't see how it can really help me day to day in my work".
+
+I can see where they are coming from (and about a year ago, I was with them!),
+but I've been playing more and more with this stuff, have close friends in the
+industry, and I am confident in this:
+
+> **We cannot ignore these tools anymore. Get with it or you may be _left behind_.**
+
+![A gif of Keanu Reaves saying "whoa"](/keanu-whoa.gif)
+
+Whoa. That's a bold (crazy!?) claim. But I believe it and I intend to back it up with this post.
+
+## What we'll build
+
+Let's build something blind in a framework I like and have read some about but have never really used.
+
+I am telling you the truth. I know roughly how I'll build this, but I haven't
+ever really used SolidJS. Take any framework you are interested in but don't
+know much about and follow along with me. I am going to use chatGPT to help me
+build a calculator widget in SolidJS with typescript.
+
+If you've read my [first post](/blog/first-post.html) you know this blog is
+built with Astro, and so I can embed components from any framework.
+
+## Final note on using ChatGPT
+
+I don't believe chatGPT or bard or any other AI is a replacement for an engineer.
+
+The point I'm trying to make here is simply this:
+
+I know SolidJS _somewhat_. I've used other frameworks similar, I've used it once
+before, I've read through docs, I've thought about problems in the shower...but
+I've never really built anything with it bigger than a couple of components. In
+order to use it, I'd have to heavily reference examples and documentation.
+
+ChatGPT saves me this hassle. It's not a replacement for an engineer, but it
+compresses all the information I need and saves me time and effort searching,
+keeping me fresh.
+
+**_It is a companion to the documentation, not a replacement._**
+
+# The start of a calculator
+
+Ok so I'm not totally helpless, but I'm going to be lazy and just go from teh
+start and get some scaffolding in straight away to avoid having to brush up on
+the docs. Now my friends (one in particular this article is targeted towards)
+will be the first to tell you and make fun of me for **_Loving_** documentation
+(all you have to do is read the manual!), but I've come to their way of thinking
+somewhat. IFF you can execute and get the job done quickly without reading the
+manual, shoudln't you sometimes?
+
+## GPT Alone
+
+Now, chatGPT is good enough to do this entire component all by itself I reckon,
+and you can do this, cross reference the docs, and be done.
+
+But that's not my intent here. My intent is to show how one might use this tool
+on something larger and more complex. So I'm going to use chatGPT to help me
+get the scaffolding in place, and then build on that bit by bit. But in case
+you wanna know what chat GPT comes up with:
+
+import CodeBlockSubtitled from "/src/components/CodeBlockSubtitled.astro";
+
+<CodeBlockSubtitled
+  filename="src/components/demos/solid/building_a_calculator/calculator_gpt0.tsx"
+  lang="tsx"
+>
+  <p>
+    "GPT4 Prompt: I want to make a simple calculator component in solidJS, can you build that for
+    me? It should have addition, subtraction, multiplication, division, and clear functionality"
+    <br />
+    Link: <a href="https://chat.openai.com/share/5f1737f0-6c04-4d2b-a417-3fab2821bc48">ChatGPT</a>
+  </p>
+</CodeBlockSubtitled>
+
+This is nearly right, there is just a missing conversion, some padding, and the
+input is text (I wanted to build one with buttons). But I didn't specify that.
+
+```tsx
+const add = () => setResult(parseFloat(input1()) + parseFloat(input2()).toString());
+// etc...
+```
+
+<br />
+
+Here it is all fixed up with a bit of styling added to help out:
+
+import CalculatorGpt1 from "/src/components/demos/solid/building_a_calculator/calculator_gpt1.tsx";
+
+<div class="p-2 rounded-md border-gray-200 border-2 shadow-md text-center">
+  <CalculatorGpt1 client:only="solid-js" />
+</div>
+
+Well wasn't that simple!
+
+## Ok but for real
+
+Ok yeah sure. Real stuff is harder and more complex. So let's treat this problem like a series of harder problems.
+
+Here are a set of new requirements:
+
+- I want all those operations listed
+- I want to find a square root using [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method)
+- I want everything to be a button, not typing number inputs
+
+<br />
+
+Let's go!
+
+# Starting with a button
+
+I'm using tailwind and that is set up for me. Imagine you're working at a
+company and some other smart engineer already did all that. You're simply told
+"make this thing in this way we make things ok go kthxbie".
+
+Alright...better start with just a button. I'm going to use chatGPT to help me.
+
+<CodeBlockSubtitled
+  filename="src/components/demos/solid/building_a_calculator/calculator0.tsx"
+  lang="tsx"
+>
+  <p>
+    ChatGPT prompt: I'm building a calculator in solidJS. I already have tailwindCSS setup and want
+    to use that. Let's go slowly one step at a time. First I don't want text input I want to use
+    button input. Can you help me make the buttons? I want them to have a flat style with rounded
+    cornerned rectangles. Lets start with just the button part.
+    <br />
+    Link: <a href="https://chat.openai.com/share/b840c5ae-dc96-4bca-840b-0aca19385284">ChatGPT</a>
+  </p>
+</CodeBlockSubtitled>
+
+Whoa! ChatGPT went pretty hard, it generated more than just the button I asked for,
+anticipating my next questions and building the grid and everything (you can see that in the link).
+
+Let's just look at this button, though.
+
+import Calculator0 from "/src/components/demos/solid/building_a_calculator/calculator0.tsx";
+
+<div class="p-2 m-2 rounded-md border-gray-200 border-2 shadow-md text-center">
+  <Calculator0 label="button" />
+</div>
+
+<br />
+
+Can't I just say? Wow.
+
+> Wow.
+
+import { WowButton } from "/src/components/demos/solid/building_a_calculator/calculator0.tsx";
+
+<div class="p-2 m-2 rounded-md border-gray-200 border-2 shadow-md text-center">
+  <WowButton client:only="solid-js" />
+</div>
+
+Not only did it make a nice button it did a ton of nice things I need but forgot to ask for:
+
+- It made the button have a hover effect
+- It added event handling
+- It added arbitrary labeling
+- It handled unset onClick handlers.
+
+It did make a "mistake" in that this is not valid strict typescript since the props have no type.
+
+It also oddly (to me but perhaps I don't know some idiom) seperated the callback
+from the data by also passing a "value" prop. I suppose this is nice if you want
+to change payload but not reload different callbacks etc in the application.
+
+## Fixing the errors.
+
+ChatGPT forgot to be type safe, probably because most folks don't. I'll just fix
+that up really quick by defining the interface (I could have asked ChatGPT to do
+this for me if I don't know typescript so well, but that's ok)
+
+import CodeBlock from "/src/components/CodeBlock.astro";
+
+<CodeBlock filename="src/components/demos/solid/building_a_calculator/calculator1.tsx" lang="tsx" />
+
+_Juicy_. Nice and safe. Thanks types!
+
+## Constructing the grid
+
+Well, chatGPT already did that, so let's show what that looks like now.
+
+I've also added a bit of cleanup for typing as before and some renaming to make
+it fit with what we have so far.
+
+If you open the chat, you'll see at first it uses some stringly typing...ick.
+
+I don't want to type a bunch of boilerplate, so maybe chatGPT can help me save some finger strokes.
+
+<CodeBlock
+  filename="src/components/demos/solid/building_a_calculator/calculator_button_type.tsx"
+  lang="tsx"
+/>
+
+import Grid from "/src/components/demos/solid/building_a_calculator/calculator1.tsx";
+
+<CodeBlockSubtitled
+  filename="src/components/demos/solid/building_a_calculator/calculator2.tsx"
+  lang="tsx"
+>
+  <p>
+    "Followup prompt: can you generate buttons for 0-9, decimal point, addition, subtraction,
+    division, multiplaction, positive negative, and equals?"
+  </p>
+  <p>"Great! Instead of stringly typed "value" prop can we use an enum or something type safe?"</p>
+  <p>"can you save me some keystrokes and define the entire grid for me?"</p>
+  <p>
+    Link: <a href="https://chat.openai.com/share/b840c5ae-dc96-4bca-840b-0aca19385284">ChatGPT</a>
+  </p>
+</CodeBlockSubtitled>
+
+import CalculatorGrid from "/src/components/demos/solid/building_a_calculator/calculator2.tsx";
+
+<div class="p-2 m-2 rounded-md border-gray-200 border-2 shadow-md text-center">
+  <CalculatorGrid client:only="solid-js" />
+</div>
+
+![Are you not entertained gif](/are-you-not-entertained.gif)
+
+Are you impressed yet?
+
+It even put the things in the right order so the higher numbers are at the top,
+operators on the right, things aren't just strewn about!
+
+## Summary so far
+
+Just to be clear, so far I've built a simple text input calculator, made a nice
+pretty button (and I barely know CSS...I'm an OS and distributed systems
+developer. I make tools. Any front end I've done is a hobby thing and it is
+_BAD_).
+
+So now what we need is an output box and to wire up the buttons to do things.
+
+## Wiring up the buttons
+
+Ok so as before, I've added some types and rearranged things a bit. I am the
+engineer after all, GPT just helps me out.
+
+I forget how to use `useState` in SolidJS, I'm glad it generated that for me. I
+checked the Solid docs to make sure this all checks out. _Evvverrrythinnngg looks Gucci..._
+
+<CodeBlockSubtitled
+  filename="src/components/demos/solid/building_a_calculator/calculator_wired.tsx"
+  lang="tsx"
+>
+  <p>
+    "Now can we wire up the buttons to create numbers and state so that when I click them I can make
+    a number, then I can click operations and make another number, and then I can click teh equals
+    button and the final result is displayed?"
+  </p>
+</CodeBlockSubtitled>
+
+### Aside
+
+This ain't how I'd structure this. I'd decouple my state. Hard. But this is just a demo, I'm making a point here.
+
+I'd probably have a stateless module that does the calculations, hide that
+behind some opaque whatever if I needed to, then pass that (via props or [other
+mechanisms](https://docs.solidjs.com/concepts/context) to my widget here.) Heck,
+I could ask chatGPT to help with that too, but this has already taken me too
+long to write and you wanna go on with your day (or [whatever it is you might be
+doing](https://knowyourmeme.com/memes/boss-makes-a-dollar-i-make-a-dime)).
+
+I don't love this structure either. But it's a start. I can refactor later.
+
+Chill out. Back to the code.
+
+import CalculatorWired from "/src/components/demos/solid/building_a_calculator/calculator_wired.tsx";
+
+<div class="p-2 m-2 rounded-md border-gray-200 border-2 shadow-md text-center">
+  <CalculatorWired client:only="solid-js" />
+</div>
+
+Hey this is nice! There are some problems though:
+
+- It jumps around because there is no minimum height set on the output box
+- There is no clear button.
+- The pos/neg button doesn't work right.
+- After creating an output on equals it doesn't clear on the next input.
+- Probably other stuff I haven't thought of yet.
+
+But it is functional. I can work from here on my own quite easily and consult
+the AI when I get stuck.
+
+Here is one more with some fixes added. To keep the article itself short, I left
+it out but you can see it in the blog's github under `calculator_wired2.tsx`.
+
+import CalculatorWired2 from "/src/components/demos/solid/building_a_calculator/calculator_wired2.tsx";
+
+<div class="p-2 m-2 rounded-md border-gray-200 border-2 shadow-md text-center">
+  <CalculatorWired2 client:only="solid-js" />
+</div>
+
+Here is the diff:
+
+<div>
+  <CodeBlock
+    class="language-diff-typescript diff-highlight"
+    filename="public/building_blind/calculator_wired_diff.diff"
+    type="tsx"
+  />
+</div>
+
+# Conclusion
+
+TODO
