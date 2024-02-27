@@ -81,10 +81,7 @@ you wanna know what chat GPT comes up with:
 
 import CodeBlockSubtitled from "/src/components/CodeBlockSubtitled.astro";
 
-<CodeBlockSubtitled
-  filename="src/components/demos/solid/building_a_calculator/calculator_gpt0.tsx"
-  lang="tsx"
->
+<CodeBlockSubtitled filename="public/building_blind/calculator_gpt0.tsx.bad" lang="tsx">
   <p>
     "GPT4 Prompt: I want to make a simple calculator component in solidJS, can you build that for
     me? It should have addition, subtraction, multiplication, division, and clear functionality"
@@ -305,6 +302,14 @@ the AI when I get stuck.
 
 Here is one more with some fixes added. To keep the article itself short, I left
 it out but you can see it in the blog's github under `calculator_wired2.tsx`.
+
+I also added one more query with chatGPT to find out how to write a TS function
+that gets teh square root with newton's method. See the
+[chat](https://chat.openai.com/share/b840c5ae-dc96-4bca-840b-0aca19385284) for
+details.
+
+I then lazily added this to the calculator. I didn't even check the output.
+There are errors here if you put in a negative value. Don't come for me.
 
 import CalculatorWired2 from "/src/components/demos/solid/building_a_calculator/calculator_wired2.tsx";
 

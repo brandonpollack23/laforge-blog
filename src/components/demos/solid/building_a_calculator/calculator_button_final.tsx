@@ -1,8 +1,9 @@
-import type { CalculatorButtonType } from "./calculator_button_type";
+import { CalculatorButtonType } from "./calculator_button_type";
 
 interface CalculatorButtonProps {
   label: string;
   value: CalculatorButtonType;
+  class?: string;
   onClick: (value: CalculatorButtonType) => void;
 }
 
@@ -32,5 +33,11 @@ export const WowButton = () => {
     window.alert(value);
   }
 
-  return <CalculatorButton label="Say WOW (click me)" onClick={alertValue} value="WOW!!!!" />;
+  return (
+    <CalculatorButton
+      label="Say WOW (click me)"
+      onClick={alertValue}
+      value={CalculatorButtonType.Wow}
+    />
+  );
 };

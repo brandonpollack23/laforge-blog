@@ -1,4 +1,5 @@
 export enum CalculatorButtonType {
+  Wow = "WOW!!!!",
   Clear = "C",
   Zero = "0",
   One = "1",
@@ -17,4 +18,5 @@ export enum CalculatorButtonType {
   Equals = "=",
   Decimal = ".",
   ToggleSign = "±",
+  Sqrt = "√",
 }

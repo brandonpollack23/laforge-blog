@@ -84,7 +84,8 @@ const Calculator = () => {
       case CalculatorButtonType.Subtract:
       case CalculatorButtonType.Multiply:
       case CalculatorButtonType.Divide:
-        handleOperation(value);
+      case CalculatorButtonType.Sqrt:
+        setCurrentInput(sqrtNewtonMethod(parseFloat(currentInput()))?.toFixed(5).toString()!);
         break;
       case CalculatorButtonType.Equals:
         calculateResult();
@@ -153,9 +154,37 @@ const CalculatorGrid = (props: CalculatorGridProps) => {
           onClick={onButtonClick}
           class="col-span-2"
         />
+        <CalculatorButton label="√" value={CalculatorButtonType.Sqrt} onClick={onButtonClick} />
       </div>
     </div>
   );
 };
 
 export default Calculator;
+
+function sqrtNewtonMethod(
+  x: number,
+  tolerance: number = 1e-7,
+  maxIterations: number = 1000
+): number | undefined {
+  if (x < 0) {
+    console.error("Input must be non-negative.");
+    return undefined;
+  }
+  if (x === 0 || x === 1) {
+    return x;
+  }
+
+  let s = x; // Initial guess for the square root
+  for (let i = 0; i < maxIterations; i++) {
+    let nextS = 0.5 * (s + x / s); // Update s using Newton's method formula
+    if (Math.abs(nextS - s) < tolerance) {
+      // Check if the change is within the tolerance
+      return nextS; // Found a sufficiently accurate approximation
+    }
+    s = nextS; // Prepare for the next iteration
+  }
+
+  console.warn("Max iterations reached without converging to the specified tolerance.");
+  return s; // Return the last approximation
+}
