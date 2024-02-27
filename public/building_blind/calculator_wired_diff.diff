@@ -21,18 +21,51 @@
 > 
 45a64
 >     setResultDisplayed(true);
-72a92,94
+69a89,91
+>       case CalculatorButtonType.Sqrt:
+>         setCurrentInput(sqrtNewtonMethod(parseFloat(currentInput()))?.toFixed(5).toString()!);
+>         break;
+72a95,97
 >       case CalculatorButtonType.Clear:
 >         calculatorReset();
 >         break;
-81c103
+81c106
 <       <div class="text-lg">{currentInput()}</div>
 ---
 >       <div class="text-lg min-h-12">{currentInput()}</div>
-124a147,152
->           onClick={onButtonClick}
->           class="col-span-2"
->         />
+127a153,159
 >         <CalculatorButton
 >           label="Clear"
 >           value={CalculatorButtonType.Clear}
+>           onClick={onButtonClick}
+>           class="col-span-2"
+>         />
+>         <CalculatorButton label="√" value={CalculatorButtonType.Sqrt} onClick={onButtonClick} />
+133a166,192
+> 
+> function sqrtNewtonMethod(
+>   x: number,
+>   tolerance: number = 1e-7,
+>   maxIterations: number = 1000
+> ): number | undefined {
+>   if (x < 0) {
+>     console.error("Input must be non-negative.");
+>     return undefined;
+>   }
+>   if (x === 0 || x === 1) {
+>     return x;
+>   }
+> 
+>   let s = x; // Initial guess for the square root
+>   for (let i = 0; i < maxIterations; i++) {
+>     let nextS = 0.5 * (s + x / s); // Update s using Newton's method formula
+>     if (Math.abs(nextS - s) < tolerance) {
+>       // Check if the change is within the tolerance
+>       return nextS; // Found a sufficiently accurate approximation
+>     }
+>     s = nextS; // Prepare for the next iteration
+>   }
+> 
+>   console.warn("Max iterations reached without converging to the specified tolerance.");
+>   return s; // Return the last approximation
+> }
