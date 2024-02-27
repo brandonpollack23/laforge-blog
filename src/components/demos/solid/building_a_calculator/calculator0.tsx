@@ -1,4 +1,4 @@
-const CalculatorButton = (props) => {
+const CalculatorButton = (props: any) => {
   // Button click handler
   const handleClick = () => {
     if (props.onClick) {
@@ -19,7 +19,7 @@ const CalculatorButton = (props) => {
 export default CalculatorButton;
 
 export const WowButton = () => {
-  function alertValue(value) {
+  function alertValue(value: any) {
     console.log("Alerting", value);
     window.alert(value);
   }
