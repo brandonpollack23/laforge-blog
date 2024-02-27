@@ -84,6 +84,8 @@ const Calculator = () => {
       case CalculatorButtonType.Subtract:
       case CalculatorButtonType.Multiply:
       case CalculatorButtonType.Divide:
+        handleOperation(value);
+        break;
       case CalculatorButtonType.Sqrt:
         setCurrentInput(sqrtNewtonMethod(parseFloat(currentInput()))?.toFixed(5).toString()!);
         break;
