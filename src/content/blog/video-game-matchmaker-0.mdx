@@ -1,0 +1,183 @@
+---
+title: "Video game matchmaking service: A case study comparing Rust/Tokio and Elixir/BEAM 0 of N"
+description: 'In this series of posts, I will be discussing my idea to build a "matchmaking" service for video games.  I will be comparing the performance of Rust/Tokio and Elixir/BEAM.  My main intent is to compare and contrast the development experiences of building a deployable, monitored, and measured application to a cloud service and comparing the experience between them.'
+pubDate: "Mar 2 2024"
+heroImage: "/matchmaker/matchmaker-hero-image-0.webp"
+heroImageSubtext: "DALL-E Prompt (also generated with GPT): Imagine an intense scene blending the dynamic, action-packed worlds of multiplayer shooter games such as 'Apex Legends' and 'Call of Duty,' with the intricate, behind-the-scenes world of game server technology. The left half of the image is alive with characters in mid-combat, wielding futuristic weapons, and leaping through an explosive battlefield that screams adrenaline and strategy. This vivid gaming scene transitions seamlessly to the right half, which reveals a sophisticated, high-tech server room bathed in cool blue light. Here, racks of servers hum with activity, their surfaces etched with glowing lines of code flowing like a digital river. Above this technological marvel, the air shimmers with a subtle 'Matrix'-style effect, where streams of code gently cascade down, symbolizing the invisible yet crucial code that powers the multiplayer experience. The overall image captures the essence of gaming excitement and the complex technology that enables it, all in a single, harmonious composition."
+tags: ["rust", "tokio", "elixir", "BEAM"]
+---
+
+## Introduction
+
+Today I want to talk a bit about a personal project I've been working on. I
+alluded to it somewhat in my [last post](/blog/dont-ignore-ai-building-blind.html).
+
+As in that post, I did lean on using GPT quite a bit when utilizing the
+libraries and concepts that were new to me, but that isn't going to be the primary focus here.
+
+Instead, I wanted to talk about the project itself and what I'm trying to learn
+from it.
+
+## The Backdrop
+
+### Rust
+
+I like learning languages and frameworks. I really like Rust and it is my go-to
+for personal projects. I just really love it.
+
+It makes sense, I came up through Electrical Engineering and begrudgingly learned
+to write software in C and ASM. From there I learned more and more C++ (I did
+have a bit of experience before University), followed by ~~the single most damaging thing ever to affect our industry~~ Java.
+
+Then I found Scala. I loved it. It changed the way I thought about software. It
+introduced this idea of "functional programming" and "immutability" and
+"concurrency" and "monads" and "typeclasses" and "typelevel programming" and
+"macros". There was so much you could do. Maybe too much. That's probably why
+nowadays I prefer Kotlin when working in heavily managed environments.
+
+Rust is like the Scala for C++ to me.
+
+### Functional Style
+
+After discovering Scala, I learned to not do [PLOP (Place Oriented
+Programming)](https://www.youtube.com/watch?v=-I-VpPMzG7c&pp=ygUTdGhlIHZhbHVlIG9mIHZhbHVlcw%3D%3D)
+and to focus less on the hardware and optimization and focus on
+maintainability, readability, and usefulness of the software itself.
+
+A [friend of mine](https://mediocregopher.com) introduced me to a language
+called "Clojure" and some talks by its creator [Rich Hickey](https://en.wikipedia.org/wiki/Rich_Hickey).
+
+This got me going down a massive rabbit hole. Functional and immutability have
+become requirements for me in a language now (barring the ownership semantics
+Rust offers). I often find myself coding [the Clojure
+way](https://www.youtube.com/watch?v=vK1DazRK_a0&t=1605s&pp=ygUPdGhlIGNsb2p1cmUgd2F5).
+
+The one thing I wish I could agree on with the Clojure community is the dynamic
+typing. All the benefits of a dynamic system are amazing (and Rich has tons of
+talks on it, the interactive coding is spectacular), but dynamic typing is not
+so much. I find myself constantly asking "What is in this thing?", needing to
+jump around the code base and running out of breadcrumbs to go home. Types just
+help consumers of libraries (or other parts of the same code base) not make
+mistakes, and I feel with type inference the positives far outweigh the
+"ceremony".
+
+This particularly bothers me when there are arbitrary levels of nesting. (Is
+this the map of the list or the list of the lists of maps?).
+
+I just like types so I don't need to bring a bag of breadcrumbs with me.
+
+### Elixir
+
+[Elixir](https://elixir-lang.org/) is another lesser-known language (though
+getting popular now) that runs on the BEAM (Erlang VM).
+
+Though this [will likely soon
+change](https://elixir-lang.org/blog/2023/09/20/strong-arrows-gradual-typing/),
+Elixir is not a statically typed language.
+
+I find myself loving a lot about elixir, but tripping over myself even with
+some small advent of code problems.
+
+I always go back and forth on how I feel about this. I wonder, "Do real
+programming problems in real life even have this problem?".
+
+I also wonder "Is Elixir and all its cushy benefits really all that good? Maybe I
+should stick to the warm and cozy safety of Rust and its delectable sum-type
+enums".
+
+I got tired of mulling it over and decided to just build the same thing twice
+and compare the experiences and the results.
+
+### The Project
+
+I'm building a "matchmaking" service for video games.
+
+Ever wonder how when you're playing Apex Legends or The Finals (or practically any
+AAA game nowadays) you join a server, get matched up, and then join the _actual_
+game server and play a game?
+
+Me too.
+
+Let's build that.
+
+#### Requirements
+
+- It must be "production ready" (logging, tracing, metrics) and deployable to a cloud service, we need to compare the real world developer's full experience here.
+  - I'll use OpenTelemtry for this and Jaeger locally and Datadog in the cloud
+- Non-HTTP protocol (but still built on TCP).
+  - I used MessagePack with a size prefix for this
+- A test application that can be used to simulate a lot of client connections
+- Deployment to a cloud provider using [Pulumi](https://www.pulumi.com/)
+
+#### Non-Requirements
+
+- An actual game server allocation, we're going to use an interface that just pretends to do this.
+- A real game
+- Not fun stuff
+
+## Let's Go!
+
+Stay tuned for parts 1 through N where I break down the rust implementation, the
+elixir implementation, discuss their pros and cons, measure their performance,
+etc.
+
+As of writing the Rust implementation is complete and I'll write up as much as I
+can on that first before moving on to the Elixir implementation (which may take
+a bit since I have little Elixir experience).
+
+### Hypothesis
+
+Elixir seems great, I am almost certain the development experience will be
+simpler than Rust, but I don't think Rust and Tokio will be as difficult as
+people make it out to be either.
+
+Elixir will likely perform "worse" (whatever that means) than Rust, but the
+bottle-neck in a service like this would be the data layer (accessing users and
+their current skill level from a database) and not the service that sorts them
+into buckets.
+
+#### Rust
+
+##### Pros
+
+- Performance/Cost per vCPU and Memory (likely)
+- Type safety
+- Author familiarity
+
+##### Cons
+
+- While Tokio is great, Pin\<Future> whatshshamacallit hell is real, and sometimes difficult.
+- Requiring locks sometimes around channels (since this isn't Glommio and per thread) is a bit of a pain.
+- Fighting the compiler fixes problems that would come up later, but it's still a pain.
+
+#### Elixir
+
+##### Pros
+
+- Functional
+- Tons of stuff is built in from the get-go (no need to pull in a library for messaging/async. That's all in the BEAM!)
+- Distributing later is as easy as pie (no need for Redis or another dependency to share sessions).
+- Runtime observability is amazing
+- Dynamic (not just typing but a dynamic system)
+
+##### Cons
+
+- Overhead of a VM (though how big of a deal this really is remains to be seen)
+- Dynamic typing and runtime failures because of typos, misunderstandings, etc
+- Author unfamiliarity
+
+## A note on Pulumi
+
+Pulumi is a new up-and-coming IaC platform that I think is awesome and easier to
+use than Terroform for me since I already know the languages they support quite
+well.
+
+It also lets me do some cool stuff like read files etc and use them in my
+infrastructure code.
+
+## Comments Welcome!
+
+Did I miss anything? Do you have any questions? Do you have any suggestions for
+pros/cons? Tell me I'm wrong, I'm here to learn!
+
+I'll update the article with any suggestions or questions I get.
