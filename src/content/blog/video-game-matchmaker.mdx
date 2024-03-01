@@ -1,0 +1,24 @@
+---
+title: "Video game matchmaking service: A case study comparing Rust/Tokio and Elixir/BEAM 0 of N"
+description: 'In this series of posts, I will be discussing my idea to build a "matchmaking" service for video games.  I will be comparing the performance of Rust/Tokio and Elixir/BEAM.  My main intent is to compare and contrast the development experiences of building a deployable, monitored, and measured application to a cloud service and comparing the experience between them.'
+pubDate: "Mar 2 2024"
+heroImage: "/matchmaker/matchmaker-hero-image-0.webp"
+heroImageSubtext: "DALL-E Prompt (also generated with GPT): Imagine an intense scene blending the dynamic, action-packed worlds of multiplayer shooter games such as 'Apex Legends' and 'Call of Duty,' with the intricate, behind-the-scenes world of game server technology. The left half of the image is alive with characters in mid-combat, wielding futuristic weapons, and leaping through an explosive battlefield that screams adrenaline and strategy. This vivid gaming scene transitions seamlessly to the right half, which reveals a sophisticated, high-tech server room bathed in cool blue light. Here, racks of servers hum with activity, their surfaces etched with glowing lines of code flowing like a digital river. Above this technological marvel, the air shimmers with a subtle 'Matrix'-style effect, where streams of code gently cascade down, symbolizing the invisible yet crucial code that powers the multiplayer experience. The overall image captures the essence of gaming excitement and the complex technology that enables it, all in a single, harmonious composition."
+tags: ["rust", "tokio", "elixir", "BEAM"]
+---
+
+## TODO
+
+- Pertinent with the Helldivers stuff
+- Always wondered what is best, rust or elixir for this
+  - I Love rust, but elixir seems great
+  - Is elixir too slow? how do they compare really?
+  - Is tokio really that hard?
+- This focuses on setup, part 2 discusses rust implementation, part 3 discusses elixir implementation
+
+- Rust implementation article should include:
+  - The core code and uses of tokio, challenges faced
+  - The test application
+  - Tokio tokio_tracing instrumentation
+  - Setting tracing up with all the backends with a focus on jaeger and datadog
+  - why datadog for measuring (scaling and it not being my problem)
